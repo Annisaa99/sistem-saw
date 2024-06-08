@@ -1,0 +1,34 @@
+@extends('layouts.app2')
+
+@section('page-title', 'Tambah User')
+
+@section('content')
+<div class="card">
+    <div class="card-header">
+        Form User
+    </div>
+    <div class="card-body">
+        <form action="{{ route('user.store') }}" method="POST">
+            @csrf 
+            <div class="nb-4">
+                <label class="form-label">Nama</label>
+                <input type="text" class="form-control" name="nama">
+            </div>
+            <div class="nb-4">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+            <div class="nb-4">
+                <label class="form-label">Jabatan</label>
+                <select class="form-select" name="jabatan">
+                    <option selected disabled>Pilih Jabatan</option>
+                    <option value="Customer Service">Customer Service</option>
+                    <option value="Account Officer">Account Officer</option>
+                    <option value="Direksi/PE">Direksi/PE</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>  
+    </div>
+</div>
+@endsection
