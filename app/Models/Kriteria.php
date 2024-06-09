@@ -15,6 +15,13 @@ class Kriteria extends Model
         'jenis',
         'bobot',
     ];
-    
+
+
+    //getNilaiKriteria
+    public function getNilaiKriteria()
+    {
+        return $this->hasMany(NilaiKriteria::class, 'id_kriteria', 'id');
+    }
+
     use HasFactory;
 }

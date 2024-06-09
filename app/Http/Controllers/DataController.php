@@ -46,53 +46,87 @@ class DataController extends Controller
 
     public function detail()
     {
-        $pengajuan = Pengajuan::all();
+        $pengajuan_selected = [5];
+        //pilih data yang id_pengajuan diselect
+        $data = Data::whereIn('id_pengajuan', $pengajuan_selected)->get();
 
-        $arr_pengajuan = [];
 
-        foreach ($pengajuan as $key => $value) {
-            $arr_pengajuan[$key]['nasabah'] = $value->getNasabah->nama;
-            $data=Data::where('id_pengajuan', $value->id)->get();
+        //ambil bobot dari model Kriteria
+        $kriteria = Kriteria::all();
+        $bobot_kriteria = [];
+        foreach ($kriteria as $k) {
+            $bobot_kriteria[$k->id] = $k->bobot;
+        }
 
-            //alternatif
-            foreach ($data as $key2 => $value2) {
-                $arr_pengajuan[$key]['data_alternatif']['kriteria'][$key2]['nilai'] = $value2->getNilaiKriteria->nilai;
-                $arr_pengajuan[$key]['data_alternatif']['kriteria'][$key2]['nama'] = $value2->getNilaiKriteria->nama;
-                $arr_pengajuan[$key]['data_alternatif']['kriteria'][$key2]['bobot'] = $value2->getKriteria->bobot;
-                $arr_pengajuan[$key]['data_alternatif']['kriteria'][$key2]['jenis'] = $value2->getKriteria->jenis;
-                $arr_pengajuan[$key]['data_alternatif']['kriteria'][$key2]['kriteria_id'] = $value2->getKriteria->id;
+        //alternatif
+        $arr_alternatif = [];
+        foreach ($data as $value_alternatif) {
+            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['kode_kriteria'] = $value_alternatif->getKriteria->kode;
+            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['jenis_kriteria'] = $value_alternatif->getKriteria->jenis;
+            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['id_nilai_kriteria'] = $value_alternatif->id_nilai_kriteria;
+            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['nilai_nilai_kriteria'] = $value_alternatif->getNilaiKriteria->nilai;
+            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['nama_nilai_kriteria'] = $value_alternatif->getNilaiKriteria->nama;
+        }
+
+        // Hitung nilai max dan min untuk setiap kriteria
+        $max_values = [];
+        $min_values = [];
+        foreach ($data as $value) {
+            $id_kriteria = $value->id_kriteria;
+            $nilai = $value->getNilaiKriteria->nilai;
+            if (!isset($max_values[$id_kriteria]) || $nilai > $max_values[$id_kriteria]) {
+                $max_values[$id_kriteria] = $nilai;
             }
-
-            $data_alternatif = $arr_pengajuan[$key]['data_alternatif']['kriteria'];
-
-            //normalisasi
-            foreach ($data_alternatif as $key3 => $value3) {
-                if($value3['jenis']=='Benefit'){
-                    $nilai = $value3['nilai'];
-                    $nmax = NilaiKriteria::where('id_kriteria', $value3['kriteria_id'])->orderBy('nilai', 'DESC')->first()->nilai;
-                    $arr_pengajuan[$key]['data_normalisasi']['kriteria'][$key3]['nilai']=$nilai/$nmax;
-                } else if($value3['jenis']=='cost'){
-                    $nilai = $value3['nilai'];
-                    $nmin = NilaiKriteria::where('id_kriteria', $value3['kriteria_id'])->orderBy('nilai', 'ASC')->first()->nilai;
-                    $arr_pengajuan[$key]['data_normalisasi']['kriteria'][$key3]['nilai']=$nmin/$nilai;
-                }
-            }
-
-           
-            $data_normalisasi = $arr_pengajuan[$key]['data_normalisasi']['kriteria'];
-            //preferensi 
-            $preferensi = 0;
-            foreach ($data_alternatif as $key4 => $value4) {
-                $nilai_normalisasi = $data_normalisasi[$key4]['nilai'];
-                $preferensi+($value4['bobot']*$nilai_normalisasi);
-                $preferensi = $preferensi + ($value4['bobot']* $nilai_normalisasi);
-                $arr_pengajuan[$key]['nilai_preferensi']=$preferensi;
+            if (!isset($min_values[$id_kriteria]) || $nilai < $min_values[$id_kriteria]) {
+                $min_values[$id_kriteria] = $nilai;
             }
         }
 
-        dd($arr_pengajuan);
-    }
+        //normalisasi
+        $arr_normalisasi = [];
+        foreach ($data as $value_normalisasi) {
+            $id_pengajuan = $value_normalisasi->id_pengajuan;
+            $id_kriteria = $value_normalisasi->id_kriteria;
+            $nilai = $value_normalisasi->getNilaiKriteria->nilai;
+            $jenis_kriteria = $value_normalisasi->getKriteria->jenis;
 
-   
+            $arr_normalisasi[$id_pengajuan][$id_kriteria]['kode_kriteria'] = $value_normalisasi->getKriteria->kode;
+            $arr_normalisasi[$id_pengajuan][$id_kriteria]['jenis_kriteria'] = $jenis_kriteria;
+            $arr_normalisasi[$id_pengajuan][$id_kriteria]['nama_nilai_kriteria'] = $nilai;
+
+            if ($jenis_kriteria == 'Benefit') {
+                $max = $max_values[$id_kriteria];
+                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_maksimal'] = $max;
+                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_normalisasi'] = $nilai / $max;
+            } else {
+                $min = $min_values[$id_kriteria];
+                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_minimal'] = $min;
+                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_normalisasi'] = $min / $nilai;
+            }
+        }
+
+
+
+        // Perhitungan preferensi
+        $preferensi = [];
+        foreach ($arr_normalisasi as $id_pengajuan => $kriteria) {
+            $preferensi[$id_pengajuan] = [
+                'total' => 0,
+                'detail' => []
+            ];
+            foreach ($kriteria as $id_kriteria => $nilai) {
+                $nilai_bobot = $bobot_kriteria[$id_kriteria];
+                $nilai_normalisasi = $nilai['nilai_normalisasi'];
+                $preferensi[$id_pengajuan]['detail'][$id_kriteria] = [
+                    'bobot' => $nilai_bobot,
+                    'nilai_normalisasi' => $nilai_normalisasi,
+                    'nilai_terbobot' => $nilai_normalisasi * $nilai_bobot
+                ];
+                $preferensi[$id_pengajuan]['total'] += $nilai_normalisasi * $nilai_bobot;
+            }
+        }
+
+        dd($arr_alternatif, $arr_normalisasi, $preferensi);
+    }
 
 }
