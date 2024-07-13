@@ -1,11 +1,11 @@
 @extends('layouts.app2')
 
-@section('page-title', 'Edit User')
+@section('page-title', 'Edit Pengguna')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        Form User
+        Form Pengguna
     </div>
     <div class="card-body">
         <form action="{{ route('user.update') }}" method="POST">

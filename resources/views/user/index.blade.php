@@ -1,11 +1,11 @@
 @extends('layouts.app2')
 
-@section('page-title', 'user')
+@section('page-title', 'pengguna')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        Data User
+        Data Pengguna
     </div>
     <div class="card-body">
         <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah Data</a>
