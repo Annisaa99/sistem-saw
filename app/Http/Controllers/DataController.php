@@ -12,11 +12,10 @@ use App\Models\User;
 
 class DataController extends Controller
 {
-    public function index()
+    public function index($id_pengajuan)
     {
         //perintah mengambil data
-        $data = Data::all();
-
+        $data = Data::where('id_pengajuan', $id_pengajuan)->get();
         return view('data.index', compact('data'));
     }
 
@@ -27,106 +26,107 @@ class DataController extends Controller
         $nilaikriteria = NilaiKriteria::all();
         $users = User::all();
         return view('data.create', compact('pengajuan', 'kriteria', 'nilaikriteria', 'users'));
-
     }
 
     public function store(Request $request)
     {
-        $data = [
-            'id_pengajuan' => $request->id_pengajuan,
-            'id_kriteria' => $request->id_kriteria,
-            'id_nilai_kriteria' => $request->id_nilai_kriteria,
-            'id_users' => $request->id_users,
+        foreach ($request->kriteria as $key => $value) {
+            $data = [
+                'id_pengajuan' => $request->id_pengajuan,
+                'id_nilai_kriteria' => $value,
+                'id_users' => auth()->user()->id,
+            ];
 
-        ];
-
-        Data::create($data);
-        return redirect()->route('data.index');
+            Data::create($data);
+        }
+        return redirect()->route('pengajuan.index');
     }
 
-    public function detail()
+    public function detail($id_pengajuan)
     {
-        $pengajuan_selected = [5];
-        //pilih data yang id_pengajuan diselect
-        $data = Data::whereIn('id_pengajuan', $pengajuan_selected)->get();
+        // Pilih data yang id_pengajuan diselect
+        $data = Data::where('id_pengajuan', $id_pengajuan)->get();
 
-
-        //ambil bobot dari model Kriteria
+        // Ambil bobot dari model Kriteria
         $kriteria = Kriteria::all();
-        $bobot_kriteria = [];
-        foreach ($kriteria as $k) {
-            $bobot_kriteria[$k->id] = $k->bobot;
-        }
+        $bobot_kriteria = $kriteria->pluck('bobot', 'id');
 
-        //alternatif
+        // Alternatif
         $arr_alternatif = [];
         foreach ($data as $value_alternatif) {
-            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['kode_kriteria'] = $value_alternatif->getKriteria->kode;
-            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['jenis_kriteria'] = $value_alternatif->getKriteria->jenis;
-            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['id_nilai_kriteria'] = $value_alternatif->id_nilai_kriteria;
-            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['nilai_nilai_kriteria'] = $value_alternatif->getNilaiKriteria->nilai;
-            $arr_alternatif[$value_alternatif->id_pengajuan][$value_alternatif->id_kriteria]['nama_nilai_kriteria'] = $value_alternatif->getNilaiKriteria->nama;
+            $kriteria_id = $value_alternatif->getNilaiKriteria->getKriteria->id;
+            $arr_alternatif[$value_alternatif->id_pengajuan][$kriteria_id] = [
+                'kode_kriteria' => $value_alternatif->getNilaiKriteria->getKriteria->kode,
+                'jenis_kriteria' => $value_alternatif->getNilaiKriteria->getKriteria->jenis,
+                'id_nilai_kriteria' => $value_alternatif->id_nilai_kriteria,
+                'nilai_nilai_kriteria' => $value_alternatif->getNilaiKriteria->nilai,
+                'nama_nilai_kriteria' => $value_alternatif->getNilaiKriteria->nama,
+            ];
         }
 
         // Hitung nilai max dan min untuk setiap kriteria
-        $max_values = [];
-        $min_values = [];
-        foreach ($data as $value) {
-            $id_kriteria = $value->id_kriteria;
-            $nilai = $value->getNilaiKriteria->nilai;
-            if (!isset($max_values[$id_kriteria]) || $nilai > $max_values[$id_kriteria]) {
-                $max_values[$id_kriteria] = $nilai;
-            }
-            if (!isset($min_values[$id_kriteria]) || $nilai < $min_values[$id_kriteria]) {
-                $min_values[$id_kriteria] = $nilai;
-            }
-        }
+        $max_values = $data->groupBy('getNilaiKriteria.getKriteria.id')
+                        ->map(function ($group) {
+                            return $group->max('getNilaiKriteria.nilai');
+                        });
 
-        //normalisasi
+        $min_values = $data->groupBy('getNilaiKriteria.getKriteria.id')
+                        ->map(function ($group) {
+                            return $group->min('getNilaiKriteria.nilai');
+                        });
+
+        // Normalisasi
         $arr_normalisasi = [];
         foreach ($data as $value_normalisasi) {
             $id_pengajuan = $value_normalisasi->id_pengajuan;
-            $id_kriteria = $value_normalisasi->id_kriteria;
+            $id_kriteria = $value_normalisasi->getNilaiKriteria->getKriteria->id;
             $nilai = $value_normalisasi->getNilaiKriteria->nilai;
-            $jenis_kriteria = $value_normalisasi->getKriteria->jenis;
+            $nama_nilai_kriteria = $value_normalisasi->getNilaiKriteria->nama;
+            $jenis_kriteria = $value_normalisasi->getNilaiKriteria->getKriteria->jenis;
 
-            $arr_normalisasi[$id_pengajuan][$id_kriteria]['kode_kriteria'] = $value_normalisasi->getKriteria->kode;
-            $arr_normalisasi[$id_pengajuan][$id_kriteria]['jenis_kriteria'] = $jenis_kriteria;
-            $arr_normalisasi[$id_pengajuan][$id_kriteria]['nama_nilai_kriteria'] = $nilai;
-
-            if ($jenis_kriteria == 'Benefit') {
-                $max = $max_values[$id_kriteria];
-                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_maksimal'] = $max;
-                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_normalisasi'] = $nilai / $max;
-            } else {
-                $min = $min_values[$id_kriteria];
-                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_minimal'] = $min;
-                $arr_normalisasi[$id_pengajuan][$id_kriteria]['nilai_normalisasi'] = $min / $nilai;
-            }
+            $arr_normalisasi[$id_pengajuan][$id_kriteria] = [
+                'kode_kriteria' => $value_normalisasi->getNilaiKriteria->getKriteria->kode,
+                'jenis_kriteria' => $jenis_kriteria,
+                'nama_nilai_kriteria' => $nama_nilai_kriteria,
+                'nilai_normalisasi' => $jenis_kriteria == 'Benefit'
+                                        ? $nilai / $max_values[$id_kriteria]
+                                        : $min_values[$id_kriteria] / $nilai,
+            ];
         }
-
-
 
         // Perhitungan preferensi
         $preferensi = [];
         foreach ($arr_normalisasi as $id_pengajuan => $kriteria) {
-            $preferensi[$id_pengajuan] = [
-                'total' => 0,
-                'detail' => []
-            ];
+            $total = 0;
+            $detail = [];
             foreach ($kriteria as $id_kriteria => $nilai) {
                 $nilai_bobot = $bobot_kriteria[$id_kriteria];
                 $nilai_normalisasi = $nilai['nilai_normalisasi'];
-                $preferensi[$id_pengajuan]['detail'][$id_kriteria] = [
+                $nilai_terbobot = $nilai_normalisasi * $nilai_bobot;
+
+                $detail[$id_kriteria] = [
                     'bobot' => $nilai_bobot,
                     'nilai_normalisasi' => $nilai_normalisasi,
-                    'nilai_terbobot' => $nilai_normalisasi * $nilai_bobot
+                    'nilai_terbobot' => $nilai_terbobot,
                 ];
-                $preferensi[$id_pengajuan]['total'] += $nilai_normalisasi * $nilai_bobot;
+
+                $total += $nilai_terbobot;
             }
+            $preferensi[$id_pengajuan] = [
+                'total' => $total,
+                'detail' => $detail,
+            ];
         }
 
-        dd($arr_alternatif, $arr_normalisasi, $preferensi);
+        $result = [
+            'data' => $data,
+            'arr_alternatif' => $arr_alternatif,
+            'arr_normalisasi' => $arr_normalisasi,
+            'preferensi' => $preferensi,
+        ];
+
+        return view('data.detail', compact('result'));
     }
+
 
 }

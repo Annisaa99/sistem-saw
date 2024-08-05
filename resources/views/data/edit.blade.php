@@ -9,29 +9,29 @@
         </div>
     <div class="card-body">
         <form action="{{ route('data.update') }}" method="POST">
-            @csrf 
+            @csrf
             <input type="hidden" name="id" value="{{ $pengajuan->id }}">
             <div class="nb-4">
                 <label class="form-label">Id Pengajuan</label>
-                <select class="form-select" name="id_pengajuan">
+                <select class="form-control" name="id_pengajuan">
                     <option selected value = '{{ $pengajuan->id_pengajuan }}'>{{ $pengajuan->getNasabah->nama }}</option>
                     @foreach($pengajuan as $item)
-                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option> 
+                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option>
                     @endforeach
                 </select>
             <input type="hidden" name="id" value="{{ $pengajuan->id }}">
             <div class="nb-4">
                 <label class="form-label">Id Pengajuan</label>
-                <select class="form-select" name="id_pengajuan">
+                <select class="form-control" name="id_pengajuan">
                     <option selected value = '{{ $pengajuan->id_pengajuan }}'>{{ $pengajuan->getNasabah->nama }}</option>
                     @foreach($pengajuan as $item)
-                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option> 
+                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option>
                     @endforeach
                 </select>
-            
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="cancel" class="btn btn-primary">Cancel</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Pengajuan;
+use App\Models\Data;
 use App\Models\Nasabah;
+use App\Models\Kriteria;
+use App\Models\Pengajuan;
+use Illuminate\Http\Request;
 
 class PengajuanController extends Controller
 {
@@ -14,6 +16,21 @@ class PengajuanController extends Controller
         $pengajuan = Pengajuan::all();
 
         return view('pengajuan.index', compact('pengajuan'));
+    }
+
+    public function data($id_pengajuan)
+    {
+        //perintah mengambil data
+        $pengajuan = Pengajuan::find($id_pengajuan);
+        $kriteria = Kriteria::all();
+
+        //jika id pengajua sudah ada di data
+        $data = Data::where('id_pengajuan', $id_pengajuan)->get();
+        if ($data->count() > 0) {
+            return redirect()->route('data.index', ['id_pengajuan' => $id_pengajuan]);
+        }
+
+        return view('pengajuan.data', compact('pengajuan', 'kriteria'));
     }
 
     public function create()
@@ -30,7 +47,6 @@ class PengajuanController extends Controller
             'status_pengajuan' => 'berkas masuk',
             'plafon' => $request->plafon,
             'keterangan' => $request->keterangan,
-
         ];
 
         Pengajuan::create($data);

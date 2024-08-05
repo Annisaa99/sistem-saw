@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <form action="{{ route('kriteria.store') }}" method="POST">
-            @csrf 
+            @csrf
             <div class="nb-4">
                 <label class="form-label">Kode</label>
                 <input type="text" class="form-control" name="kode">
@@ -20,7 +20,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Jenis</label>
-                <select class="form-select" name="jenis">
+                <select class="form-control" name="jenis">
                     <option selected disabled>Pilih Jenis</option>
                     <option value="benefit">Benefit</option>
                     <option value="cost">Cost</option>
@@ -31,7 +31,7 @@
                 <input type="number" class="form-control" name="bobot">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

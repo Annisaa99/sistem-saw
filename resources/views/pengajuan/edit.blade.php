@@ -9,14 +9,14 @@
         </div>
     <div class="card-body">
         <form action="{{ route('pengajuan.update') }}" method="POST">
-            @csrf 
+            @csrf
             <input type="hidden" name="id" value="{{ $pengajuan->id }}">
             <div class="nb-4">
                 <label class="form-label">Nama Nasabah</label>
-                <select class="form-select" name="id_nasabah">
+                <select class="form-control" name="id_nasabah">
                     <option selected value = '{{ $pengajuan->id_nasabah }}'>{{ $pengajuan->getNasabah->nama }}</option>
                     @foreach($nasabah as $item)
-                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option> 
+                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Status Pengajuan</label>
-                <select class="form-select" name="status_pengajuan">
+                <select class="form-control" name="status_pengajuan">
                     <option value="berkas_masuk">Berkas Masuk</option>
                     <option value="sedang_diproses">Sedang Proses</option>
                     <option value="diterima">Diterima</option>
@@ -39,7 +39,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Keterangan</label>
-                <select class="form-select" name="keterangan">
+                <select class="form-control" name="keterangan">
                     <option value="Umum">Umum</option>
                     <option value="MOU">MOU</option>
                 </select>
@@ -50,7 +50,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="cancel" class="btn btn-primary">Cancel</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

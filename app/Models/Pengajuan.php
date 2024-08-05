@@ -23,6 +23,18 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Nasabah::class, 'id_nasabah', 'id');
     }
-    
+
+    //check data
+    public function getData()
+    {
+        return $this->hasMany(Data::class, 'id_pengajuan', 'id');
+    }
+
+    //is data exist
+    public function isDataExist()
+    {
+        return $this->getData->count() > 0;
+    }
+
     use HasFactory;
 }

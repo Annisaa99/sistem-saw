@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <form action="{{ route('user.store') }}" method="POST">
-            @csrf 
+            @csrf
             <div class="nb-4">
                 <label class="form-label">Nama</label>
                 <input type="text" class="form-control" name="nama">
@@ -20,7 +20,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Jabatan</label>
-                <select class="form-select" name="jabatan">
+                <select class="form-control" name="jabatan">
                     <option selected disabled>Pilih Jabatan</option>
                     <option value="Customer Service">Customer Service</option>
                     <option value="Account Officer">Account Officer</option>
@@ -28,7 +28,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

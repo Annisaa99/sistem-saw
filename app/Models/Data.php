@@ -11,7 +11,6 @@ class Data extends Model
 
     protected $fillable = [
         'id_pengajuan',
-        'id_kriteria',
         'id_nilai_kriteria',
         'id_users',
     ];
@@ -22,12 +21,6 @@ class Data extends Model
           return $this->belongsTo(Pengajuan::class, 'id_pengajuan', 'id');
       }
 
-       //getidkriteria
-       public function getKriteria()
-       {
-           return $this->belongsTo(Kriteria::class, 'id_kriteria', 'id');
-       }
-      
         //getidnilaikriteria
       public function getNilaiKriteria()
       {

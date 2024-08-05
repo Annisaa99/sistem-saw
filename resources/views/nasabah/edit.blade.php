@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <form action="{{ route('nasabah.update') }}" method="POST">
-            @csrf 
+            @csrf
             <input type="hidden" name="id" value="{{ $nasabah->id }}">
             <div class="nb-4">
                 <label class="form-label">Nama</label>
@@ -29,7 +29,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Jenis Kelamin</label>
-                <select class="form-select" name="jenis_kelamin">
+                <select class="form-control" name="jenis_kelamin">
                     <option selected value="{{ $nasabah->jenis_kelamin }}">{{ $nasabah->jenis_kelamin }}</option>
                     <option value="Laki-Laki">Laki-Laki</option>
                     <option value="Perempuan">Perempuan</option>
@@ -37,7 +37,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="cancel" class="btn btn-primary">Cancel</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <form action="{{ route('kriteria.update') }}" method="POST">
-            @csrf 
+            @csrf
             <input type="hidden" name="id" value="{{ $kriteria->id }}">
             <div class="nb-4">
                 <label class="form-label">Kode</label>
@@ -21,7 +21,7 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Jenis</label>
-                <select class="form-select" name="jenis">
+                <select class="form-control" name="jenis">
                     <option selected value="{{ $kriteria->jenis }}">{{ $kriteria->jenis }}</option>
                     <option value="benefit">Benefit</option>
                     <option value="cost">Cost</option>
@@ -33,7 +33,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="cancel" class="btn btn-primary">Cancel</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

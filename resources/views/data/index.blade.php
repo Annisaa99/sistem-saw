@@ -5,10 +5,9 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        Data 
+        Data
     </div>
     <div class="card-body">
-        <a href="{{ route('data.create') }}" class="btn btn-primary">Tambah Data</a>
         <table class="table">
             <thead>
                 <tr>
@@ -27,17 +26,16 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->getPengajuan->getNasabah->nama }}</td>
-                    <td>{{ $item->getKriteria->nama }}</td>
+                    <td>{{ $item->getNilaiKriteria->getKriteria->nama }}</td>
                     <td>{{ $item->getNilaiKriteria->nama }}</td>
                     <td>{{ $item->getUser->name }}</td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->updated_at }}</td>
                     <td>
-                        <a href="" class="btn btn-dark">Detail</a>
                         <a href="{{ route('data.edit', ['id' => $item->id])}}" class="btn btn-warning">Edit</a>
                         <a href="{{ route('data.destroy', ['id' => $item->id])}}" class="btn btn-danger btn-delete">Delete</a>
                     </td>
-                </tr>   
+                </tr>
                 @endforeach
             </tbody>
         </table>

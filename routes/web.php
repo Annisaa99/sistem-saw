@@ -24,17 +24,13 @@ Route::get('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'd
 Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
-
-
-
-Route::get('/data', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
-Route::get('/data/detail', [App\Http\Controllers\DataController::class, 'detail'])->name('data.detail');
+Route::get('/data/detail/{id_pengajuan}', [App\Http\Controllers\DataController::class, 'detail'])->name('data.detail');
+Route::get('/data/{id_pengajuan}', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
 Route::get('/data/create', [App\Http\Controllers\DataController::class, 'create'])->name('data.create');
 Route::post('/data/store', [App\Http\Controllers\DataController::class, 'store'])->name('data.store');
 Route::get('/data/destroy/{id}', [App\Http\Controllers\DataController::class, 'destroy'])->name('data.destroy');
 Route::get('/data/edit/{id}', [App\Http\Controllers\DataController::class, 'edit'])->name('data.edit');
 Route::post('/data/update', [App\Http\Controllers\DataController::class, 'update'])->name('data.update');
-
 
 Route::get('/nasabah', [App\Http\Controllers\NasabahController::class, 'index'])->name('nasabah.index');
 Route::get('/nasabah/create', [App\Http\Controllers\NasabahController::class, 'create'])->name('nasabah.create');
@@ -42,7 +38,6 @@ Route::post('/nasabah/store', [App\Http\Controllers\NasabahController::class, 's
 Route::get('/nasabah/destroy/{id}', [App\Http\Controllers\NasabahController::class, 'destroy'])->name('nasabah.destroy');
 Route::get('/nasabah/edit/{id}', [App\Http\Controllers\NasabahController::class, 'edit'])->name('nasabah.edit');
 Route::post('/nasabah/update', [App\Http\Controllers\NasabahController::class, 'update'])->name('nasabah.update');
-
 
 Route::get('/kriteria', [App\Http\Controllers\KriteriaController::class, 'index'])->name('kriteria.index');
 Route::get('/kriteria/create', [App\Http\Controllers\KriteriaController::class, 'create'])->name('kriteria.create');
@@ -52,16 +47,14 @@ Route::get('/kriteria/edit/{id}', [App\Http\Controllers\KriteriaController::clas
 Route::post('/kriteria/update', [App\Http\Controllers\KriteriaController::class, 'update'])->name('kriteria.update');
 Route::get('/kriteria/detail/{id}', [App\Http\Controllers\KriteriaController::class, 'detail'])->name('kriteria.detail');
 
-
-
 Route::get('/nilaikriteria/create/{id_kriteria}', [App\Http\Controllers\NilaiKriteriaController::class, 'create'])->name('nilaikriteria.create');
 Route::post('/nilaikriteria/store', [App\Http\Controllers\NilaiKriteriaController::class, 'store'])->name('nilaikriteria.store');
 Route::get('/nilaikriteria/destroy/{id}', [App\Http\Controllers\NilaiKriteriaController::class, 'destroy'])->name('nilaikriteria.destroy');
 Route::get('/nilaikriteria/edit/{id}', [App\Http\Controllers\NilaiKriteriaController::class, 'edit'])->name('nilaikriteria.edit');
 Route::post('/nilaikriteria/update', [App\Http\Controllers\NilaiKriteriaController::class, 'update'])->name('nilaikriteria.update');
 
-
 Route::get('/pengajuan', [App\Http\Controllers\PengajuanController::class, 'index'])->name('pengajuan.index');
+Route::get('/pengajuan/data/{id_pengajuan}', [App\Http\Controllers\PengajuanController::class, 'data'])->name('pengajuan.data');
 Route::get('/pengajuan/create', [App\Http\Controllers\PengajuanController::class, 'create'])->name('pengajuan.create');
 Route::post('/pengajuan/store', [App\Http\Controllers\PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/destroy/{id}', [App\Http\Controllers\PengajuanController::class, 'destroy'])->name('pengajuan.destroy');

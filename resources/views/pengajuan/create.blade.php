@@ -9,13 +9,13 @@
         </div>
     <div class="card-body">
         <form action="{{ route('pengajuan.store') }}" method="POST">
-            @csrf 
+            @csrf
             <div class="nb-4">
                 <label class="form-label">Nama Nasabah</label>
-                <select class="form-select" name="id_nasabah">
+                <select class="form-control" name="id_nasabah">
                     <option selected disabled>Pilih Nama Nasabah</option>
                     @foreach($nasabah as $item)
-                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option> 
+                        <option value ='{{ $item->id }}'>{{ $item->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -29,14 +29,14 @@
             </div>
             <div class="nb-4">
                 <label class="form-label">Keterangan</label>
-                <select class="form-select" name="keterangan">
+                <select class="form-control" name="keterangan">
                     <option selected disabled>Pilih Keterangan</option>
                     <option value="Umum">Umum</option>
                     <option value="MOU">MOU</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>  
+        </form>
     </div>
 </div>
 @endsection

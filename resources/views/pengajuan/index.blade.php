@@ -35,15 +35,21 @@
                     <td>{{ $item->plafon }}</td>
                     <td>{{ $item->keterangan }}</td>
                     <td>{{ $item->tanggal_validasi }}</td>
-                    <td>{{ $item->total_nilai }}</td>
+                    <td>
+                        @if($item->isDataExist())
+                            <a href="{{ route('data.detail', ['id_pengajuan' => $item->id ])}}" class="btn mb-1 btn-primary">Lihat Nilai</a>
+                        @else
+                            <a class="btn mb-1 btn-primary disabled">Lihat Nilai</a>
+                        @endif
+                    </td>
                     <td>{{ $item-> created_at }}</td>
                     <td>{{ $item-> updated_at }}</td>
                     <td>
-                        <a href="{{ route('pengajuan.edit', ['id' => $item->id ])}}" class="btn btn-primary">Masukkan Data</a>
-                        <a href="{{ route('pengajuan.edit', ['id' => $item->id ])}}" class="btn btn-warning">Edit</a>
-                        <a href="{{ route('pengajuan.destroy', ['id' => $item->id ])}}" class="btn btn-danger btn-delete">Delete</a>
+                        <a href="{{ route('pengajuan.data', ['id_pengajuan' => $item->id ])}}" class="btn mb-1 btn-primary">Masukkan Data</a>
+                        <a href="{{ route('pengajuan.edit', ['id' => $item->id ])}}" class="btn mb-1 btn-warning">Edit</a>
+                        <a href="{{ route('pengajuan.destroy', ['id' => $item->id ])}}" class="btn mb-1 btn-danger btn-delete">Delete</a>
                     </td>
-                </tr>   
+                </tr>
                 @endforeach
             </tbody>
         </table>
