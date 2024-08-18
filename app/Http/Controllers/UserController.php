@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,9 +23,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'nama' => $request->nama,
+            'name' => $request->name,
             'email' => $request->email,
             'jabatan' => $request->jabatan,
+            'password' => Hash::make($request->password),
         ];
 
         User::create($data);
@@ -40,18 +42,21 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $data = [
-            'nama' => $request->nama,
+            'name' => $request->name,
             'email' => $request->email,
             'jabatan' => $request->jabatan,
+            'password' => $request->password,
         ];
 
         User::find($request->id)->update($data);
         return redirect()->route('user.index');
     }
 
-    public function destroy($id)
+
+    public function logout($id)
     {
         User::destroy($id);
         return redirect()->route('user.index');
     }
+    
 }

@@ -25,14 +25,13 @@
                 @foreach($user as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->nama }}</td>
+                    <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->jabatan }}</td>
                     <td>{{ $item-> created_at }}</td>
                     <td>{{ $item-> updated_at }}</td>
                     <td>
                     <a href="{{ route('user.edit', ['id' => $item->id])}}" class="btn btn-warning">Edit</a>
-                    <a href="{{ route('user.destroy', ['id' => $item->id])}}" class="btn btn-danger btn-delete">Delete</a>
                     </td>
                 </tr>  
                 @endforeach 

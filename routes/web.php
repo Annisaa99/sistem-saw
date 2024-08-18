@@ -20,7 +20,6 @@ Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->nam
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
 Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user.create');
 Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
-Route::get('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
@@ -60,5 +59,6 @@ Route::post('/pengajuan/store', [App\Http\Controllers\PengajuanController::class
 Route::get('/pengajuan/destroy/{id}', [App\Http\Controllers\PengajuanController::class, 'destroy'])->name('pengajuan.destroy');
 Route::get('/pengajuan/edit/{id}', [App\Http\Controllers\PengajuanController::class, 'edit'])->name('pengajuan.edit');
 Route::post('/pengajuan/update', [App\Http\Controllers\PengajuanController::class, 'update'])->name('pengajuan.update');
+Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 });
 Auth::routes();

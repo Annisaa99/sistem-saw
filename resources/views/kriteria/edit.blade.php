@@ -23,8 +23,8 @@
                 <label class="form-label">Jenis</label>
                 <select class="form-control" name="jenis">
                     <option selected value="{{ $kriteria->jenis }}">{{ $kriteria->jenis }}</option>
-                    <option value="benefit">Benefit</option>
-                    <option value="cost">Cost</option>
+                    <option value="benefit" data-keterangan="Benefit adalah jenis kriteria dimana semakin besar nilainya maka semakin baik">Benefit</option>
+                    <option value="cost" data-keterangan="Cost adalah jenis kriteria dimana semakin kecil nilainya maka semakin baik">Cost</option>
                 </select>
             </div>
             <div class="nb-4">

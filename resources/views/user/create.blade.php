@@ -12,11 +12,15 @@
             @csrf
             <div class="nb-4">
                 <label class="form-label">Nama</label>
-                <input type="text" class="form-control" name="nama">
+                <input type="text" class="form-control" name="name">
             </div>
             <div class="nb-4">
                 <label class="form-label">Email</label>
                 <input type="text" class="form-control" name="email">
+            </div>
+            <div class="nb-4">
+                <label class="form-label">Password</label>
+                <input type="text" class="form-control" name="password">
             </div>
             <div class="nb-4">
                 <label class="form-label">Jabatan</label>
