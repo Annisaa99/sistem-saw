@@ -10,7 +10,7 @@
     <div class="card-body">
         <form action="{{ route('pengajuan.store') }}" method="POST">
             @csrf
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Nama Nasabah</label>
                 <select class="form-control" name="id_nasabah">
                     <option selected disabled>Pilih Nama Nasabah</option>
@@ -19,15 +19,15 @@
                     @endforeach
                 </select>
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Tanggal Pengajuan</label>
                 <input type="date" class="form-control" name="tanggal_pengajuan">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Plafon</label>
                 <input type="text" class="form-control" name="plafon">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Keterangan</label>
                 <select class="form-control" name="keterangan">
                     <option selected disabled>Pilih Keterangan</option>

@@ -11,23 +11,23 @@
         <form action="{{ route('nasabah.update') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $nasabah->id }}">
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Nama</label>
                 <input type="text" class="form-control" name="nama" value="{{ $nasabah->nama }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">No_KTP</label>
                 <input type="number" class="form-control" name="no_ktp" value="{{ $nasabah->no_ktp }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Alamat</label>
                 <input type="text" class="form-control" name="alamat" value="{{ $nasabah->alamat }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">No_Telp</label>
                 <input type="number" class="form-control" name="no_telp" value="{{ $nasabah->no_telp }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Jenis Kelamin</label>
                 <select class="form-control" name="jenis_kelamin">
                     <option selected value="{{ $nasabah->jenis_kelamin }}">{{ $nasabah->jenis_kelamin }}</option>

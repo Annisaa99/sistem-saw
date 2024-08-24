@@ -16,7 +16,7 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Jenis</th>
-                    <th>Bobot</th>
+                    <th>Bobot ({{$total_bobot}})</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Action</th>
@@ -37,7 +37,7 @@
                         <a href="{{ route('kriteria.edit', ['id' => $item->id])}}" class="btn btn-warning">Edit</a>
                         <a href="{{ route('kriteria.destroy', ['id' => $item->id])}}" class="btn btn-danger btn-delete">Delete</a>
                     </td>
-                </tr>   
+                </tr>
                 @endforeach
             </tbody>
         </table>

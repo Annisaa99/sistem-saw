@@ -11,7 +11,7 @@
         <form action="{{ route('data.update') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $pengajuan->id }}">
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Id Pengajuan</label>
                 <select class="form-control" name="id_pengajuan">
                     <option selected value = '{{ $pengajuan->id_pengajuan }}'>{{ $pengajuan->getNasabah->nama }}</option>
@@ -20,7 +20,7 @@
                     @endforeach
                 </select>
             <input type="hidden" name="id" value="{{ $pengajuan->id }}">
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Id Pengajuan</label>
                 <select class="form-control" name="id_pengajuan">
                     <option selected value = '{{ $pengajuan->id_pengajuan }}'>{{ $pengajuan->getNasabah->nama }}</option>
