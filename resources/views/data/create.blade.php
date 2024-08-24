@@ -10,7 +10,7 @@
     <div class="card-body">
         <form action="{{ route('data.store') }}" method="POST">
         @csrf
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Pengajuan</label>
                 <select class="form-control" name="id_pengajuan">
                     <option selected disabled>Pilih Pengajuan</option>
@@ -19,7 +19,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Kriteria</label>
                 <select class="form-control" name="id_kriteria">
                     <option selected disabled>Pilih Kriteria</option>
@@ -28,7 +28,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Nilai Kriteria</label>
                 <select class="form-control" name="id_nilai_kriteria">
                     <option selected disabled>Pilih Nilai Kriteria</option>
@@ -37,7 +37,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Users</label>
                 <select class="form-control" name="id_users">
                     <option selected disabled>Pilih Users</option>

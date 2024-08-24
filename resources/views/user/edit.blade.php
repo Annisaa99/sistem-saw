@@ -13,13 +13,13 @@
             <input type="hidden" name="id" value="{{ $user->id }}">
             <div class="row mb-3">
                 <div class="col-4">
-                    <div class="nb-4">
+                    <div class="mb-4">
                         <label class="form-label">Nama</label>
                         <input type="text" class="form-control" name="name" value="{{ $user->name }}">
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="nb-4">
+                    <div class="mb-4">
                         <label class="form-label">Email</label>
                         <input type="text" class="form-control" name="email" value="{{ $user->email }}">
                     </div>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="nb-4">
+                    <div class="mb-4">
                         <label class="form-label">Jabatan</label>
                         <select class="form-control" name="jabatan">
                             <option selected value="{{ $user->jabatan }}">{{ $user->jenis_jabatan }}</option>

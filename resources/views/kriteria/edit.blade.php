@@ -11,15 +11,15 @@
         <form action="{{ route('kriteria.update') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $kriteria->id }}">
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Kode</label>
                 <input type="text" class="form-control" name="kode" value="{{ $kriteria->kode }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Nama</label>
                 <input type="text" class="form-control" name="nama" value="{{ $kriteria->nama }}">
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Jenis</label>
                 <select class="form-control" name="jenis">
                     <option selected value="{{ $kriteria->jenis }}">{{ $kriteria->jenis }}</option>
@@ -27,7 +27,7 @@
                     <option value="cost" data-keterangan="Cost adalah jenis kriteria dimana semakin kecil nilainya maka semakin baik">Cost</option>
                 </select>
             </div>
-            <div class="nb-4">
+            <div class="mb-4">
                 <label class="form-label">Bobot</label>
                 <input type="number" class="form-control" name="bobot" value="{{ $kriteria->bobot }}">
             </div>
