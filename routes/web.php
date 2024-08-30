@@ -23,7 +23,7 @@ Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store']
 Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
-Route::get('/data/detail/{id_pengajuan}', [App\Http\Controllers\DataController::class, 'detail'])->name('data.detail');
+Route::get('/data/detail', [App\Http\Controllers\DataController::class, 'detail'])->name('data.detail');
 Route::get('/data/{id_pengajuan}', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
 Route::get('/data/create', [App\Http\Controllers\DataController::class, 'create'])->name('data.create');
 Route::post('/data/store', [App\Http\Controllers\DataController::class, 'store'])->name('data.store');

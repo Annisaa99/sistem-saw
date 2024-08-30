@@ -9,6 +9,7 @@
     </div>
     <div class="card-body">
         <a href="{{ route('pengajuan.create') }}" class="btn btn-primary">Tambah Pengajuan</a>
+        <a href="{{ route('data.detail') }}" class="btn btn-primary">Lihat Hasil</a>
         <table class="table">
             <thead>
                 <tr>
@@ -19,7 +20,6 @@
                     <th>Plafon</th>
                     <th>Keterangan</th>
                     <th>Tanggal Validasi</th>
-                    <th>Total Nilai</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Action</th>
@@ -35,13 +35,6 @@
                     <td>{{ $item->plafon }}</td>
                     <td>{{ $item->keterangan }}</td>
                     <td>{{ $item->tanggal_validasi }}</td>
-                    <td>
-                        @if($item->isDataExist())
-                            <a href="{{ route('data.detail', ['id_pengajuan' => $item->id ])}}" class="btn mb-1 btn-primary">Lihat Nilai</a>
-                        @else
-                            <a class="btn mb-1 btn-primary disabled">Lihat Nilai</a>
-                        @endif
-                    </td>
                     <td>{{ $item-> created_at }}</td>
                     <td>{{ $item-> updated_at }}</td>
                     <td>
