@@ -42,10 +42,10 @@ class DataController extends Controller
         return redirect()->route('pengajuan.index');
     }
 
-    public function detail($id_pengajuan)
+    public function detail()
     {
         // Pilih data yang id_pengajuan diselect
-        $data = Data::where('id_pengajuan', $id_pengajuan)->get();
+        $data = Data::all();
 
         // Ambil bobot dari model Kriteria
         $kriteria = Kriteria::all();
@@ -118,15 +118,22 @@ class DataController extends Controller
             ];
         }
 
-        $result = [
-            'data' => $data,
-            'arr_alternatif' => $arr_alternatif,
-            'arr_normalisasi' => $arr_normalisasi,
-            'preferensi' => $preferensi,
-        ];
+        // Urutkan preferensi berdasarkan nilai total tertinggi
+        uasort($preferensi, function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
 
-        return view('data.detail', compact('result'));
+        // Berikan peringkat
+        $ranking = 1;
+        foreach ($preferensi as $id_pengajuan => &$value) {
+            $value['ranking'] = $ranking++;
+        }
+
+        $kriteria = Kriteria::all();
+
+        return view('data.detail', compact('kriteria','arr_alternatif', 'arr_normalisasi', 'preferensi'));
     }
+
 
 
 }
