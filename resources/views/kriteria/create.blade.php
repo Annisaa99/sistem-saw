@@ -11,8 +11,8 @@
         <form action="{{ route('kriteria.store') }}" method="POST">
             @csrf
             <div class="alert alert-light" role="alert">
-                <b>benefit</b> : jenis kriteria dimana nilai terbesar adalah yang terbaik <br>
-                <b>cost</b> : jenis kriteria dimana nilai terkecil adalah yang terbaik
+                <b>benefit</b> : jenis kriteria dimana semakin besar nilainya maka semakin baik <br>
+                <b>cost</b> : jenis kriteria dimana semakin kecil nilainya maka semakin baik <br>
             </div>
             <div class="nb-4">
                 <label class="form-label">Kode</label>
