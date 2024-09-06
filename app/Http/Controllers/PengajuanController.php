@@ -77,7 +77,11 @@ class PengajuanController extends Controller
 
     public function destroy($id)
     {
-        Pengajuan::destroy($id);
+        $pengajuan = Pengajuan::find($id);
+        //delete data di model data berdasarkan id_pengajuan
+        Data::where('id_pengajuan', $id)->delete();
+
+        $pengajuan->delete();
         return redirect()->route('pengajuan.index');
     }
 }

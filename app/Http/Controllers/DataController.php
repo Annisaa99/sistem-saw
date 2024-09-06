@@ -134,6 +134,25 @@ class DataController extends Controller
         return view('data.detail', compact('kriteria','arr_alternatif', 'arr_normalisasi', 'preferensi'));
     }
 
+    //edit data
+    public function edit($id)
+    {
+        $data = Data::find($id);
+        $id_nilai_kriteria = $data->id_nilai_kriteria;
+        $nilai_kriteria = NilaiKriteria::find($id_nilai_kriteria);
+        $id_kriteria = $nilai_kriteria->id_kriteria;
+        $nilai_kriteria = NilaiKriteria::where('id_kriteria', $id_kriteria)->get();
 
+        return view('data.edit', compact('data', 'nilai_kriteria'));
+    }
 
+    public function update(Request $request)
+    {
+        $data = [
+            'id_nilai_kriteria' => $request->id_nilai_kriteria,
+        ];
+
+        Data::where('id', $request->id)->update($data);
+        return redirect()->route('pengajuan.index');
+    }
 }
