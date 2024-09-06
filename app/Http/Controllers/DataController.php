@@ -153,6 +153,6 @@ class DataController extends Controller
         ];
 
         Data::where('id', $request->id)->update($data);
-        return redirect()->route('pengajuan.index');
+        return redirect()->route('data.index', ['id_pengajuan' => Data::find($request->id)->id_pengajuan]);
     }
 }
