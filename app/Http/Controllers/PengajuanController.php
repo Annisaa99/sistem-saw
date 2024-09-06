@@ -47,6 +47,7 @@ class PengajuanController extends Controller
             'status_pengajuan' => 'berkas masuk',
             'plafon' => $request->plafon,
             'keterangan' => $request->keterangan,
+            'id_users' => auth()->user()->id,
         ];
 
         Pengajuan::create($data);

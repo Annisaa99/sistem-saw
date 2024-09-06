@@ -16,6 +16,7 @@ class Pengajuan extends Model
         'plafon',
         'keterangan',
         'tanggal_validasi',
+        'id_users',
     ];
 
     //getnasabah
